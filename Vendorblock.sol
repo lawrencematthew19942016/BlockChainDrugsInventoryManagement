@@ -1,10 +1,11 @@
 pragma solidity ^0.8.6;
 
+
+
 contract VendorBlockTest {
     struct Vendor{
         uint VendorID;
         string VendorName;
-        string DeliveryDate;
         string VendorLocation;
         string PurchaseOrder;
         uint DeliveryDateDay; 
@@ -19,7 +20,7 @@ contract VendorBlockTest {
     //uint256 public transactionID;
     
     
-    function create(string memory VendorName, string memory DeliveryDate, string memory VendorLocation, uint DeliveryDateDay, uint DeliveryDateTime, uint ExpectedDateDay,  uint ExpectedDateTime,
+    function create(string memory VendorName, string memory VendorLocation, uint DeliveryDateDay, uint DeliveryDateTime, uint ExpectedDateDay,  uint ExpectedDateTime,
         string memory PurchaseOrder,
         string memory DeliveryStatus
         ) public {
@@ -37,7 +38,7 @@ contract VendorBlockTest {
             
             
             else {    vendors.push(
-                Vendor(nextID,VendorName,DeliveryDate,VendorLocation,PurchaseOrder,DeliveryDateDay, DeliveryDateTime, ExpectedDateDay, ExpectedDateTime ,DeliveryStatus)
+                Vendor(nextID,VendorName,VendorLocation,PurchaseOrder,DeliveryDateDay, DeliveryDateTime, ExpectedDateDay, ExpectedDateTime ,DeliveryStatus)
                 );
                 nextID++;
         }
@@ -46,7 +47,6 @@ contract VendorBlockTest {
          function read(uint256 VendorID)
         public view returns(uint256,
                             string memory VendorName,
-                            string memory DeliveryDate,
                             string memory VendorLocation,
                             string memory PurchaseOrder,
                             string memory DeliveryStatus,
@@ -60,7 +60,6 @@ contract VendorBlockTest {
         return (
             vendors[i].VendorID,
             vendors[i].VendorName,
-            vendors[i].DeliveryDate,
             vendors[i].VendorLocation,
             vendors[i].PurchaseOrder,
             vendors[i].DeliveryStatus,
@@ -71,22 +70,32 @@ contract VendorBlockTest {
             
             );    }
     
-    function update(uint VendorID, string memory VendorName, string memory DeliveryDate, string memory VendorLocation, string memory PurchaseOrder, string memory DeliveryStatus)
+    function update(uint VendorID, string memory VendorName, string memory VendorLocation, string memory PurchaseOrder, string memory DeliveryStatus, uint256 DeliveryDateDay,
+                            uint256 DeliveryDateTime,
+                            uint256 ExpectedDateDay, 
+                            uint256 ExpectedDateTime)
    public {
         
         
          uint i = find(VendorID);
         
-            vendors[i].VendorID;
-            vendors[i].VendorName;
-            vendors[i].DeliveryDate;
-            vendors[i].VendorLocation;
-            vendors[i].PurchaseOrder;
-            vendors[i].DeliveryStatus;
+            vendors[i].VendorID = VendorID;
+            vendors[i].VendorName = VendorName;
+            vendors[i].VendorLocation = VendorLocation;
+            vendors[i].PurchaseOrder = PurchaseOrder;
+            vendors[i].DeliveryStatus = DeliveryStatus;
+            vendors[i].DeliveryDateDay = DeliveryDateDay;
+            vendors[i].DeliveryDateTime = DeliveryDateTime;
+            vendors[i].ExpectedDateDay = ExpectedDateDay;
+            vendors[i].ExpectedDateTime = ExpectedDateTime;
         
     }
     
-        
+    
+    function destroy(uint256 StoreID) public {
+        uint256 i = find(StoreID);
+        delete vendors[i];
+    }
     
      
     function find(uint VendorID) view internal returns(uint) {
